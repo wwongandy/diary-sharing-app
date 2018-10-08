@@ -3,7 +3,7 @@ let mongoose = require('mongoose');
 let diariesDOM = new mongoose.Schema(
     {
         title: {type: String, default: 'Untitled'},
-        text: '',
+        text: {type: String, default: ''},
         date: {type: Date, default: new Date()},
         likes: {type: Number, default: 1},
         comments: {type: Array, default: []},

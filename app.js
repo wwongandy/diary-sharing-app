@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const diariesAPI = require('./routes/diaries-api');
 
 var app = express();
 
@@ -21,6 +22,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// Routes to manage the RESTful API for diaries management.
+app.delete('/diaries/:id', diariesAPI.deleteDiary);
+app.get('/diaries', diariesAPI.retrieveDiaries);
+app.get('/diaries/:id', diariesAPI.retrieveDiary);
+app.get('/diaries/public', diariesAPI.retrievePublicDiaries);
+app.post('/diaries/', diariesAPI.addDiary);
+app.post('/diaries/:id', diariesAPI.addComment);
+app.put('/diaries/:id/like', diariesAPI.likeDiary);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

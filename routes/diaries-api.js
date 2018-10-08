@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost:27017/diariesdb');
 
 let db = mongoose.connection;
 
-db.on('error', err => {
+db.on('error', (err) => {
     console.log(`Error found, unable to connect to ${db.name}.\n${err}`);
 })
 
@@ -60,6 +60,7 @@ router.retrieveDiary = (request, response) => {
 router.retrievePublicDiaries = (request, response) => {
     // Retrieves all public diaries from the database.
 
+    // FIXME: Cast to ObjectId failed for value "public" at path "_id" for model "Diary"
     Diary.find({'sharing': true}, (err, diaries) => {
 
         if (err) {
@@ -84,7 +85,7 @@ router.addDiary = (request, response) => {
     const { title, text, author, sharing } = request.body;
 
     // Ignore the POST request if the text body is empty.
-    if (text !== '') {
+    if (request.body.text !== '') {
         newDiary.title = title;
         newDiary.text = text;
         newDiary.author = author;
@@ -169,3 +170,5 @@ router.deleteDiary = (request, response) => {
         response.send('Success, diary deleted.');
     })
 }
+
+module.exports = router;
