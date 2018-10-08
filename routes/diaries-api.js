@@ -11,7 +11,7 @@ let Diary = require('../models/diaries-db');
     This will be setup to use an actual mLab MongoDB later.
  */
 let mongoose = require('mongoose');
-mongoose.connect('');
+mongoose.connect('mongodb://localhost:27017/diariesdb');
 
 let db = mongoose.connection;
 
@@ -22,3 +22,113 @@ db.on('error', err => {
 db.once('open', () => {
     console.log(`Success, connected to ${db.name}.`);
 })
+
+// RESTful API functions to interact with the database;
+
+router.retrieveDiaries = (request, response) => {
+    // Retrieves all diaries from the database regardless of publicity.
+
+    Diary.find((err, diaries) => {
+
+        if (err) {
+            response.send(`Error found while trying to access all the diaries.\n${err}`);
+        }
+
+        response.send(
+
+            // Stringify function makes the JSON format more readable/indented.
+            JSON.stringify(diaries, null, 4)
+        );
+    })
+}
+
+router.retrieveDiary = (request, response) => {
+    // Retrieves a single diary from the database via id given.
+
+    Diary.findById(request.params.id, (err, diary) => {
+
+        if (err) {
+            response.send(`Error found while trying to find the following diary.\n${err}`);
+        }
+
+        response.send(
+            JSON.stringify(diary, null, 4)
+        );
+    })
+}
+
+router.retrievePublicDiaries = (request, response) => {
+    // Retrieves all public diaries from the database.
+
+    Diary.find({'sharing': true}, (err, diaries) => {
+
+        if (err) {
+            response.send(`Error found while trying to find public diaries.\n${err}`);
+        }
+
+        response.send(
+            JSON.stringify(diaries, null, 4)
+        );
+    })
+}
+
+router.addDiary = (request, response) => {
+    // Adds a new diary to the database.
+
+    let newDiary = new Diary();
+
+    /*
+        Quickly assigning request.body elements to their appropriate attributes.
+        e.g. request.body.author is stored in author and request.body.sharing in sharing.
+     */
+    const { title, text, author, sharing } = request.body;
+
+    // Ignore the POST request if the text body is empty.
+    if (text !== '') {
+        newDiary.title = title;
+        newDiary.text = text;
+        newDiary.author = author;
+        newDiary.sharing = sharing;
+
+        newDiary.save((err) => {
+
+            if (err) {
+                response.send(`Error found while creating the new diary.\n${err}`);
+            }
+
+            response.send(
+                JSON.stringify(newDiary, null, 4)
+            );
+        })
+    }
+
+    response.send('Error found while creating the new diary.\nText field is empty.');
+}
+
+router.addComment = (request, response) => {
+    // Adds a comment to an existing diary from the database.
+
+    // Ignore the POST request if the comment is empty.
+    if (request.body.comment !== '') {
+
+        Diary.findById(request.params.id, (err, diary) => {
+
+            if (err) {
+                response.send(`Error found while trying to find the following diary.\n${err}`);
+            }
+
+            diary.comments.push(request.body.comment);
+
+            diary.save((err) => {
+
+                if (err) {
+                    response.send(`Error found while trying to add the comment to the diary.\n${err}`);
+                }
+
+                response.send(
+                    JSON.stringify(diary, null, 4)
+                );
+            })
+        })
+    }
+}
