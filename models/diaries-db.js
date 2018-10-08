@@ -5,6 +5,7 @@ let diariesDOM = new mongoose.Schema(
         title: {type: String, default: 'Untitled'},
         text: '',
         date: {type: Date, default: new Date()},
+        likes: {type: Number, default: 1},
         comments: {type: Array, default: []},
 
 

@@ -132,3 +132,40 @@ router.addComment = (request, response) => {
         })
     }
 }
+
+router.likeDiary = (request, response) => {
+    // Updates the diary's like count, simple PUT operation.
+
+    Diary.findById(request.params.id, (err, diary) => {
+
+        if (err) {
+            response.send(`Error found while trying to find the following diary.\n${err}`);
+        }
+
+        diary.likes += 1;
+
+        diary.save((err) => {
+
+            if (err) {
+                response.send(`Error found while updating the like count.\n${err}`);
+            }
+
+            response.send(
+                JSON.stringify(diary, null, 4)
+            );
+        })
+    })
+}
+
+router.deleteDiary = (request, response) => {
+    // Deletes a diary from the database.
+
+    Diary.findByIdAndRemove(request.params.id, (err) => {
+
+        if (err) {
+            response.send(`Error found while trying to delete the diary.\n${err}`);
+        }
+
+        response.send('Success, diary deleted.');
+    })
+}
