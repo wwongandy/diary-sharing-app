@@ -170,4 +170,29 @@ router.deleteDiary = (request, response) => {
     })
 }
 
+router.changePublicity = (request, response)=> {
+    // Changes the publicity of a diary with the given id.
+
+    Diary.findById(request.params.id, (err, diary) => {
+
+        if (err) {
+            response.send(`Error found while trying to find the following diary.\n${err}`);
+        }
+
+        // Inverting the boolean value of sharing.
+        diary.sharing = !diary.sharing;
+
+        diary.save((err) => {
+
+            if (err) {
+                response.send(`Error found while changing the publicity of the diary.\n${err}`);
+            }
+
+            response.send(
+                JSON.stringify(diary, null, 4)
+            );
+        })
+    })
+}
+
 module.exports = router;
