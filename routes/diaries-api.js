@@ -60,7 +60,6 @@ router.retrieveDiary = (request, response) => {
 router.retrievePublicDiaries = (request, response) => {
     // Retrieves all public diaries from the database.
 
-    // FIXME: Cast to ObjectId failed for value "public" at path "_id" for model "Diary"
     Diary.find({'sharing': true}, (err, diaries) => {
 
         if (err) {
@@ -85,7 +84,7 @@ router.addDiary = (request, response) => {
     const { title, text, author, sharing } = request.body;
 
     // Ignore the POST request if the text body is empty.
-    if (request.body.text !== '') {
+    if (request.body.text != undefined) {
         newDiary.title = title;
         newDiary.text = text;
         newDiary.author = author;
@@ -101,9 +100,9 @@ router.addDiary = (request, response) => {
                 JSON.stringify(newDiary, null, 4)
             );
         })
+    } else {
+        response.send('Error found while creating the new diary.\nText field is empty.');
     }
-
-    response.send('Error found while creating the new diary.\nText field is empty.');
 }
 
 router.addComment = (request, response) => {

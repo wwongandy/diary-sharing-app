@@ -26,8 +26,8 @@ app.use('/users', usersRouter);
 // Routes to manage the RESTful API for diaries management.
 app.delete('/diaries/:id', diariesAPI.deleteDiary);
 app.get('/diaries', diariesAPI.retrieveDiaries);
-app.get('/diaries/:id', diariesAPI.retrieveDiary);
 app.get('/diaries/public', diariesAPI.retrievePublicDiaries);
+app.get('/diaries/:id', diariesAPI.retrieveDiary);
 app.post('/diaries/', diariesAPI.addDiary);
 app.post('/diaries/:id', diariesAPI.addComment);
 app.put('/diaries/:id/like', diariesAPI.likeDiary);
