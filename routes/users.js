@@ -15,29 +15,42 @@ router.addUser = (request, response) => {
 
   if (request.body.name != undefined && request.body.password != undefined) {
 
-    /*
-      Hashing the password before saving it using bcrypt.js
-      https://www.abeautifulsite.net/hashing-passwords-with-nodejs-and-bcrypt
-     */
-    bcrypt.hash(password, 10, (err, hash) => {
+    // Only add a new user if the existing username isn't used.
+    User.find({'name': name}, (err, users) => {
 
       if (err) {
-        response.send(`Error found while hashing the password.\n${err}`);
+        response.send(`Error found while checking if the given name already exists.\n${err}`);
       }
 
-      newUser.name = name;
-      newUser.password = password;
+      if (users.length == 0) {
 
-      newUser.save((err) => {
+          /*
+            Hashing the password before saving it using bcrypt.js
+            https://www.abeautifulsite.net/hashing-passwords-with-nodejs-and-bcrypt
+          */
+          bcrypt.hash(password, 10, (err, hash) => {
 
-        if (err) {
-          response.send(`Error found while creating a new user.\n${err}`);
-        }
+              if (err) {
+                  response.send(`Error found while hashing the password.\n${err}`);
+              }
 
-        response.send(
-            JSON.stringify(newUser, null, 4)
-        );
-      })
+              newUser.name = name;
+              newUser.password = hash;
+
+              newUser.save((err) => {
+
+                  if (err) {
+                      response.send(`Error found while creating a new user.\n${err}`);
+                  }
+
+                  response.send(
+                      JSON.stringify(newUser, null, 4)
+                  );
+              })
+          })
+      } else {
+        response.send('Error found while creating a new user.\nName already used.');
+      }
     })
   } else {
     response.send('Error found while creating a new user.\nName or password field empty.');
@@ -63,7 +76,7 @@ router.authenticateUser = (request, response) => {
         bcrypt.compare(password, user.password, (err, result) => {
 
           if (err) {
-            response.send(`Error found while authenticating the user.\n${err}`)
+            response.send(`Error found while authenticating the user.\n${err}`);
           } else if (result) { // Result = true if match.
 
             // TODO: Redirect to user landing page rather than sending user data.
@@ -72,10 +85,9 @@ router.authenticateUser = (request, response) => {
             );
           }
         })
-      })
+      });
 
-      // Finished looking through the database for matching user/passwords.
-      response.send('Error found.\nIncorrect user or password.');
+      // response.send('Error found while authenticating user.\nIncorrect credentials.');
     })
   } else {
     response.send(`Error found while authenticating user.\nName or password field empty.`);
@@ -92,6 +104,27 @@ router.deleteUser = (request, response) => {
       }
 
       response.send('Success, user deleted.');
+    })
+}
+
+router.retrieveUsers = (request, response) => {
+  // Retrieve all usernames (for testing).
+
+    User.find((err, users) => {
+
+      if (err) {
+        response.send(`Error found while trying to find the users.\n${err}`);
+      }
+
+      users.forEach((user) => {
+
+        // Hide the passwords from display.
+        user.password = null;
+      });
+
+      response.send(
+          JSON.stringify(users, null, 4)
+      );
     })
 }
 

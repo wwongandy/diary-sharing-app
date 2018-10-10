@@ -33,6 +33,12 @@ app.post('/diaries/:id', diariesAPI.addComment);
 app.put('/diaries/:id/like', diariesAPI.likeDiary);
 app.put('/diaries/:id/changePublicity', diariesAPI.changePublicity);
 
+// Routes to manage RESTful user creation/authentication.
+app.get('/users', usersRouter.retrieveUsers);
+app.post('/users', usersRouter.addUser);
+app.post('/users/login', usersRouter.authenticateUser);
+app.delete('/users/:id', usersRouter.deleteUser);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
