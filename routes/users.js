@@ -4,7 +4,12 @@ let router = express.Router();
 let bcrypt = require('bcryptjs');
 let User = require('../models/users-db');
 
-// RESTful API functions to allow creation and authentication of users;
+/*
+    RESTful API functions to allow creation and authentication of users;
+
+    TODO:
+    Add function to change password later.
+ */
 
 router.addUser = (request, response) => {
   // Adds a new user to the database.

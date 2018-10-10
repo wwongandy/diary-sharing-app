@@ -23,7 +23,12 @@ router.retrieveDiaries = (request, response) => {
 }
 
 router.retrieveDiary = (request, response) => {
-    // Retrieves a single diary from the database via id given.
+    /*
+        Retrieves a single diary from the database via id given.
+
+        FIXME:
+        Function only returns a single diary.
+      */
 
     Diary.findById(request.params.id, (err, diary) => {
 
