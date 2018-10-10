@@ -170,7 +170,7 @@ router.deleteDiary = (request, response) => {
     })
 }
 
-router.changePublicity = (request, response)=> {
+router.changePublicity = (request, response) => {
     // Changes the publicity of a diary with the given id.
 
     Diary.findById(request.params.id, (err, diary) => {
