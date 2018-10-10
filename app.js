@@ -57,7 +57,7 @@ app.use(function(err, req, res, next) {
     This will be setup to use an actual mLab MongoDB later.
  */
 let mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/diariesdb');
+mongoose.connect('mongodb://localhost:27017/diariesdb', { useNewUrlParser: true });
 
 let db = mongoose.connection;
 
