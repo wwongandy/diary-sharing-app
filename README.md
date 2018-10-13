@@ -3,5 +3,6 @@ WIP project for Web App Development 2. Public/private diary writing sharing webs
 
 ## TODO:
 - Allow interaction between users and diaries -> Associate diaries with author/user.
-- Adding UI to application with Semantic UI.
+- Simple fuzzy search usage for diaries.
 - Deploy to Heroku.
+- Adding UI to application with Semantic UI (if enough time).
