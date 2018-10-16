@@ -23,12 +23,7 @@ router.retrieveDiaries = (request, response) => {
 }
 
 router.retrieveDiary = (request, response) => {
-    /*
-        Retrieves a single diary from the database via id given.
-
-        FIXME:
-        Function only returns a single diary.
-      */
+    // Retrieves a single diary from the database via id given.
 
     Diary.findById(request.params.id, (err, diary) => {
 
@@ -66,14 +61,14 @@ router.addDiary = (request, response) => {
         Quickly assigning request.body elements to their appropriate attributes.
         e.g. request.body.author is stored in author and request.body.sharing in sharing.
      */
-    const { title, text, author, sharing } = request.body;
+    const { title, text, author } = request.body;
 
     // Ignore the POST request if the text body is empty.
-    if (request.body.text != undefined) {
+    if (request.body.text != undefined || request.body.text != '') {
         newDiary.title = title;
         newDiary.text = text;
         newDiary.author = author;
-        newDiary.sharing = sharing;
+        newDiary.sharing = true;
 
         newDiary.save((err) => {
 
