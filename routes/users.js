@@ -115,17 +115,15 @@ router.deleteUser = (request, response) => {
 router.retrieveUsers = (request, response) => {
   // Retrieve all usernames (for testing).
 
-    User.find((err, users) => {
+    /*
+        Removing the password attributes when displaying the users.
+        null is used initially to tell MongoDB not to use any queries.
+     */
+    User.find(null, '-password', (err, users) => {
 
       if (err) {
         response.send(`Error found while trying to find the users.\n${err}`);
       }
-
-      users.forEach((user) => {
-
-        // Hide the passwords from display.
-        user.password = null;
-      });
 
       response.send(
           JSON.stringify(users, null, 4)
