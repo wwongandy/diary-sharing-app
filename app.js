@@ -3,10 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-const diariesAPI = require('./routes/diaries-api');
+const routes = require('./routes');
 
 var app = express();
 
@@ -20,24 +17,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-// app.use('/users', usersRouter);
-
-// Routes to manage the RESTful API for diaries management.
-app.get('/diaries', diariesAPI.retrieveDiaries);
-app.delete('/diaries/:id', diariesAPI.deleteDiary);
-app.get('/diaries/public', diariesAPI.retrievePublicDiaries);
-app.get('/diaries/:id', diariesAPI.retrieveDiary);
-app.post('/diaries/', diariesAPI.addDiary);
-app.post('/diaries/:id', diariesAPI.addComment);
-app.put('/diaries/:id/like', diariesAPI.likeDiary);
-app.put('/diaries/:id/changePublicity', diariesAPI.changePublicity);
-
-// Routes to manage RESTful user creation/authentication.
-app.get('/users', usersRouter.retrieveUsers);
-app.post('/users', usersRouter.addUser);
-app.post('/users/login', usersRouter.authenticateUser);
-app.delete('/users/:id', usersRouter.deleteUser);
+// Using the routes file to manage all the URL routing.
+app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
