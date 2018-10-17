@@ -67,7 +67,7 @@ router.addDiary = (request, response) => {
     if (request.body.text != undefined || request.body.text != '') {
         newDiary.title = title;
         newDiary.text = text;
-        newDiary.author = author;
+        newDiary.author = request.params.userId;
         newDiary.sharing = true;
 
         newDiary.save((err) => {

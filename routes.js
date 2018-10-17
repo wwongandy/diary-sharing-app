@@ -6,16 +6,17 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const diariesAPI = require('./routes/diaries-api');
 
-// Main landing page router.
+// Landing pages that the user interacts with.
 router.get('/', indexRouter);
+// router.get('/user/:id', usersRouter.showDiaries);
 
 // Diaries' RESTful API routing calls.
 router.get('/diaries', diariesAPI.retrieveDiaries);
 router.delete('/diaries/:id', diariesAPI.deleteDiary);
 router.get('/diaries/public', diariesAPI.retrievePublicDiaries);
 router.get('/diaries/:id', diariesAPI.retrieveDiary);
-router.post('/diaries', diariesAPI.addDiary);
-router.post('/diaries/:id', diariesAPI.addComment);
+router.post('/diaries/:userId', diariesAPI.addDiary); // User Id is used to associate the added diary with a user.
+router.post('/diaries/:id/comment', diariesAPI.addComment);
 router.put('/diaries/:id/like', diariesAPI.likeDiary);
 router.put('/diaries/:id/changePublicity', diariesAPI.changePublicity);
 

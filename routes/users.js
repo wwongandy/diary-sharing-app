@@ -84,10 +84,13 @@ router.authenticateUser = (request, response) => {
             response.send(`Error found while authenticating the user.\n${err}`);
           } else if (result) { // Result = true if match.
 
-            // TODO: Redirect to user landing page rather than sending user data.
-            response.send(
-                JSON.stringify(user, null, 4)
-            );
+              // TODO: Redirect to user landing page rather than sending user data.
+              /*
+              response.send(
+                  JSON.stringify(user, null, 4)
+              );
+              */
+              response.redirect('/user/' + user.id);
           }
         })
       });
