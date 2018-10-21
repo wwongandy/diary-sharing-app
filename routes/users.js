@@ -3,6 +3,7 @@ let router = express.Router();
 
 let bcrypt = require('bcryptjs');
 let User = require('../models/users-db');
+let Diary = require('./diaries-api');
 
 /*
     RESTful API functions to allow creation and authentication of users;
@@ -84,7 +85,7 @@ router.authenticateUser = (request, response) => {
             response.send(`Error found while authenticating the user.\n${err}`);
           } else if (result) { // Result = true if match.
 
-              // TODO: Redirect to user landing page rather than sending user data.
+              // Redirect to user landing page rather than sending user data.
               /*
               response.send(
                   JSON.stringify(user, null, 4)
@@ -116,13 +117,13 @@ router.deleteUser = (request, response) => {
 }
 
 router.retrieveUsers = (request, response) => {
-  // Retrieve all usernames (for testing).
+    // Retrieve all usernames (for testing).
 
     /*
-        Removing the password attributes when displaying the users.
+        Removing the password and id attributes when displaying the users.
         null is used initially to tell MongoDB not to use any queries.
      */
-    User.find(null, '-password', (err, users) => {
+    User.find(null, '-password -_id', (err, users) => {
 
       if (err) {
         response.send(`Error found while trying to find the users.\n${err}`);

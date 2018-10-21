@@ -175,4 +175,20 @@ router.changePublicity = (request, response) => {
     })
 }
 
+router.retrieveUserDiaries = (request, response) => {
+    // Retrieves all diaries of a particular user.
+
+    Diary.find({'author': request.params.userId}, (err, diaries) => {
+
+        if (err) {
+            response.send(`Error found while trying to access the diaries of the given user.\n${err}`);
+        }
+
+        response.render(
+            'user',
+            {diaries: diaries}
+        );
+    })
+}
+
 module.exports = router;

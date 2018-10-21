@@ -8,7 +8,7 @@ const diariesAPI = require('./routes/diaries-api');
 
 // Landing pages that the user interacts with.
 router.get('/', indexRouter);
-// router.get('/user/:id', usersRouter.showDiaries);
+router.get('/user/:id', diariesAPI.retrieveUserDiaries);
 
 // Diaries' RESTful API routing calls.
 router.get('/diaries', diariesAPI.retrieveDiaries);
