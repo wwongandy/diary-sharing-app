@@ -95,8 +95,6 @@ router.authenticateUser = (request, response) => {
           }
         })
       });
-
-      // response.send('Error found while authenticating user.\nIncorrect credentials.');
     })
   } else {
     response.send(`Error found while authenticating user.\nName or password field empty.`);

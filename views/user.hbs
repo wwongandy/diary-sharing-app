@@ -1,6 +1,37 @@
-{{#each diaries}}
-    <div class="ui raised segment">
-        <h5>{{this.title}}</h5>
-        <p>{{this.text}}</p>
-    </div>
-{{/each}}
+<div class="ui stackable green segment">
+    <h4 class="ui horizontal divider header">
+        Diaries
+    </h4>
+
+    {{#each diaries}}
+        <div class="ui raised segment">
+            <h5>{{this.title}}</h5>
+            <p>{{this.text}}</p>
+        </div>
+    {{/each}}
+</div>
+
+<div class="ui stackable red segment">
+    <h4 class="ui horizontal divider header">
+        New diary
+    </h4>
+
+    <form class="ui segment" action="/diaries/{{userId}}" method="POST">
+        <div class="ui form">
+            <div class="field">
+                <label>Title</label>
+                <input rows="2" placeholder="A Day in the Life" name="title">
+            </div>
+            <div class="field">
+                <label>Diary Text</label>
+                <textarea placeholder="Dear Diary," name="text"></textarea>
+            </div>
+        </div>
+
+        <div class="ui horizontal divider"></div>
+
+        <button class="ui red submit button">
+            Submit
+        </button>
+    </form>
+</div>

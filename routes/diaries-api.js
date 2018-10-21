@@ -76,9 +76,12 @@ router.addDiary = (request, response) => {
                 response.send(`Error found while creating the new diary.\n${err}`);
             }
 
+            /*
             response.send(
                 JSON.stringify(newDiary, null, 4)
             );
+            */
+            response.redirect('/user/' + request.params.userId);
         })
     } else {
         response.send('Error found while creating the new diary.\nText field is empty.');
@@ -186,7 +189,10 @@ router.retrieveUserDiaries = (request, response) => {
 
         response.render(
             'user',
-            {diaries: diaries}
+            {
+                userId: request.params.userId,
+                diaries: diaries
+            }
         );
     })
 }
