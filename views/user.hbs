@@ -5,8 +5,16 @@
 
     {{#each diaries}}
         <div class="ui raised segment">
-            <h5>{{this.title}}</h5>
-            <p>{{this.text}}</p>
+            <div class="ui basic right aligned segment">
+                <h5>{{this.title}}</h5>
+                <h6>{{this.date}}</h6>
+            </div>
+            <p class="ui basic segment">
+                {{this.text}}
+
+                <br><br>
+                <i class="thumbs up icon"></i> {{this.likes}}
+            </p>
         </div>
     {{/each}}
 </div>
