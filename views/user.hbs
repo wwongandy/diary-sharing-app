@@ -1,10 +1,10 @@
-<div class="ui stackable green segment">
+<div class="ui stackable segment">
     <h4 class="ui horizontal divider header">
         Diaries
     </h4>
 
     {{#each diaries}}
-        <div class="ui raised segment">
+        <div class="ui stacked segment">
             <div class="ui basic right aligned segment">
                 <h5>{{this.title}}</h5>
                 <h6>{{this.date}}</h6>
@@ -19,12 +19,14 @@
     {{/each}}
 </div>
 
-<div class="ui stackable red segment">
+<br><br>
+
+<div class="ui stackable segment">
     <h4 class="ui horizontal divider header">
         New diary
     </h4>
 
-    <form class="ui segment" action="/diaries/{{userId}}" method="POST">
+    <form class="ui basic segment" action="/diaries/{{userId}}" method="POST">
         <div class="ui form">
             <div class="field">
                 <label>Title</label>
@@ -38,7 +40,7 @@
 
         <div class="ui horizontal divider"></div>
 
-        <button class="ui red submit button">
+        <button class="ui blue submit button">
             Submit
         </button>
     </form>
