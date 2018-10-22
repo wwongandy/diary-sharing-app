@@ -12,6 +12,7 @@ router.get('/user/:userId', diariesAPI.retrieveUserDiaries);
 
 // Diaries' RESTful API routing calls.
 router.get('/diaries', diariesAPI.retrieveDiaries);
+router.post('/diaries/search', diariesAPI.retrievePublicDiariesWithTitle)
 router.delete('/diaries/:id', diariesAPI.deleteDiary);
 router.get('/diaries/public', diariesAPI.retrievePublicDiaries);
 router.get('/diaries/:id', diariesAPI.retrieveDiary);

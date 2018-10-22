@@ -59,12 +59,12 @@ router.addDiary = (request, response) => {
 
     /*
         Quickly assigning request.body elements to their appropriate attributes.
-        e.g. request.body.author is stored in author and request.body.sharing in sharing.
+        e.g. request.body.author is now stored in author.
      */
     const { title, text, author } = request.body;
 
     // Ignore the POST request if the text body is empty.
-    if (request.body.text != undefined || request.body.text != '') {
+    if (String(request.body.text) != '') {
         newDiary.title = title;
         newDiary.text = text;
         newDiary.author = request.params.userId;
@@ -92,7 +92,7 @@ router.addComment = (request, response) => {
     // Adds a comment to an existing diary from the database.
 
     // Ignore the POST request if the comment is empty.
-    if (request.body.comment !== '') {
+    if (String(request.body.comment) !== '') {
 
         Diary.findById(request.params.id, (err, diary) => {
 
@@ -117,7 +117,7 @@ router.addComment = (request, response) => {
 }
 
 router.likeDiary = (request, response) => {
-    // Updates the diary's like count, simple PUT operation.
+    // Updates a diary's like count, simple PUT operation.
 
     Diary.findById(request.params.id, (err, diary) => {
 
@@ -193,6 +193,32 @@ router.retrieveUserDiaries = (request, response) => {
                 userId: request.params.userId,
                 diaries: diaries
             }
+        );
+    })
+}
+
+router.retrievePublicDiariesWithTitle = (request, response) => {
+    // Retrieves all public diaries with a matching title.
+
+    Diary.find({'sharing': true}, (err, diaries) => {
+
+        if (err) {
+            response.send(`Error found while trying to find public diaries.\n${err}`);
+        }
+
+        let matchingDiaries = [];
+
+        // Add every diary that doesn't have a matching title to the new array.
+        for (const key in diaries) {
+            const diary = diaries[key];
+
+            if (diary.title.includes(request.body.title || '')) {
+                matchingDiaries.push(diary);
+            }
+        }
+
+        response.send(
+            JSON.stringify(matchingDiaries, null, 4)
         );
     })
 }

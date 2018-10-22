@@ -19,7 +19,7 @@ router.addUser = (request, response) => {
 
   const { name, password } = request.body;
 
-  if (request.body.name != undefined && request.body.password != undefined) {
+  if (String(request.body.name) != '') {
 
     // Only add a new user if the existing username isn't used.
     User.find({'name': name}, (err, users) => {
