@@ -22,14 +22,14 @@
           <a href='/signup' class="item">
               Sign Up
           </a>
-          <div class="right menu">
+          <form class="right menu form" action="/search" method="POST">
               <div class="item">
                   <div class="ui icon input">
-                      <input type="text" placeholder="Search...">
-                      <i class="search link icon"></i>
+                      <input type="text" name="title" placeholder="Search...">
+                      <button class="ui basic icon button"><i class="search link icon"></i></button>
                   </div>
               </div>
-          </div>
+          </form>
       </div>
 
     {{{body}}}

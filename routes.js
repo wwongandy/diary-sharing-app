@@ -11,7 +11,6 @@ router.get('/', indexRouter);
 router.get('/diaries', diariesAPI.retrievePublicDiaries);
 router.get('/users', usersRouter.retrieveUsers);
 router.get('/signup', usersRouter.promptSignup)
-router.get('/search', diariesAPI.retrievePublicDiariesWithTitle) // Fuzzy search implementation.
 router.get('/user/:userId', diariesAPI.retrieveUserDiaries);
 
 /*
@@ -20,6 +19,7 @@ router.get('/user/:userId', diariesAPI.retrieveUserDiaries);
     Note that the some routes are commented out and replaced with a different initial URL name (e.g. /deletediary/:userId <== /diaries),
     they were replaced to allow the UI to interact with the routes, as DELETE/PUT methods are not supported.
  */
+router.post('/search', diariesAPI.retrievePublicDiariesWithTitle) // Fuzzy search implementation.
 router.get('/diaries/:diaryId', diariesAPI.retrieveDiary);
 router.get('/deletediary/:userId/:diaryId', diariesAPI.deleteDiary);  // <== router.delete('/diaries/:id', diariesAPI.deleteDiary);
 router.post('/diaries/:userId', diariesAPI.addDiary); // User Id is used to associate the added diary with a user.

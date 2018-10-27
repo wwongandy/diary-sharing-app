@@ -61,6 +61,7 @@ router.retrievePublicDiaries = (request, response) => {
         response.render(
             'diaries',
             {
+                type: 'Public',
                 diaries: diaries
             }
         )
@@ -238,9 +239,19 @@ router.retrievePublicDiariesWithTitle = (request, response) => {
             }
         }
 
+        /*
         response.send(
             JSON.stringify(matchingDiaries, null, 4)
         );
+        */
+
+        response.render(
+            'diaries',
+            {
+                type: 'Found',
+                diaries: matchingDiaries
+            }
+        )
     })
 }
 
