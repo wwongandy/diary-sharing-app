@@ -1,0 +1,23 @@
+<div class="ui stackable segment">
+    <h4 class="ui horizontal divider header">
+        Public Diaries
+    </h4>
+
+    {{#each diaries}}
+        <div class="ui stacked segment">
+            <div class="ui basic right aligned segment">
+                <h3>{{title}}</h3>
+                <h6>{{date}}</h6>
+            </div>
+
+            <div class="ui clearing divider"></div>
+
+            <p class="ui basic segment">
+                {{text}}
+
+                <br><br>
+                {{likes}} <i class="thumbs up blue icon"></i>
+            </p>
+        </div>
+    {{/each}}
+</div>
