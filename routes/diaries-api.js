@@ -193,9 +193,12 @@ router.changePublicity = (request, response) => {
                 response.send(`Error found while changing the publicity of the diary.\n${err}`);
             }
 
+            /*
             response.send(
                 JSON.stringify(diary, null, 4)
             );
+            */
+            response.redirect('/user/' + request.params.userId);
         })
     })
 }

@@ -25,7 +25,7 @@ router.get('/deletediary/:userId/:diaryId', diariesAPI.deleteDiary);  // <== rou
 router.post('/diaries/:userId', diariesAPI.addDiary); // User Id is used to associate the added diary with a user.
 router.post('/commentdiary/:diaryId', diariesAPI.addComment);
 router.get('/likediary/:diaryId', diariesAPI.likeDiary);  // <== router.put('/diaries/:id/like', diariesAPI.likeDiary);
-router.get('/sharediary/:diaryId', diariesAPI.changePublicity); // <== router.put('/diaries/:id/changePublicity', diariesAPI.changePublicity);
+router.get('/sharediary/:userId/:diaryId', diariesAPI.changePublicity); // <== router.put('/diaries/:id/changePublicity', diariesAPI.changePublicity);
 
 // User API related routes.
 router.post('/users', usersRouter.addUser);

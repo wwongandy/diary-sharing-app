@@ -16,8 +16,17 @@
                 {{text}}
 
                 <br><br>
-                {{likes}} <i class="thumbs up blue icon"></i>
-                <a href="/deletediary/{{../userId}}/{{id}}"><i class="ui right floated small remove circle red icon"></i></a>
+
+                <a class="ui blue tag label">{{likes}} Likes</a>
+                <a class="ui red tag label" href="/deletediary/{{../userId}}/{{id}}">Remove Diary</a>
+                <a class="ui green tag label" href="/sharediary/{{../userId}}/{{id}}"><i>
+                    Currently
+                    {{#if sharing}}
+                        Public
+                    {{else}}
+                        Private
+                    {{/if}}
+                </i></a>
             </p>
         </div>
     {{/each}}
