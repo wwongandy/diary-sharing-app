@@ -49,9 +49,19 @@ router.addUser = (request, response) => {
                       response.send(`Error found while creating a new user.\n${err}`);
                   }
 
+                  /*
                   response.send(
                       JSON.stringify(newUser, null, 4)
                   );
+                  */
+                  // Update current page.
+                  response.render(
+                      'signup',
+                      {
+                          success: 'yay',
+                          user: newUser
+                      }
+                  )
               })
           })
       } else {
@@ -85,12 +95,12 @@ router.authenticateUser = (request, response) => {
             response.send(`Error found while authenticating the user.\n${err}`);
           } else if (result) { // Result = true if match.
 
-              // Redirect to user landing page rather than sending user data.
               /*
               response.send(
                   JSON.stringify(user, null, 4)
               );
               */
+              // Redirect to user landing page rather than sending user data.
               response.redirect('/user/' + user.id);
           }
         })
@@ -104,7 +114,7 @@ router.authenticateUser = (request, response) => {
 router.deleteUser = (request, response) => {
   // Deleting a user (for testing).
 
-    User.findByIdAndRemove(request.params.id, (err) => {
+    User.findByIdAndRemove(request.params.userId, (err) => {
 
       if (err) {
         response.send(`Error found while trying to delete the user.\n${err}`);
@@ -119,18 +129,33 @@ router.retrieveUsers = (request, response) => {
 
     /*
         Removing the password and id attributes when displaying the users.
-        null is used initially to tell MongoDB not to use any queries.
+        null is used initially to tell MongoDB not to use any query parameters.
      */
-    User.find(null, '-password -_id', (err, users) => {
+    User.find(null, '-_id -password', (err, users) => {
 
       if (err) {
         response.send(`Error found while trying to find the users.\n${err}`);
       }
 
+      /*
       response.send(
           JSON.stringify(users, null, 4)
       );
+      */
+
+      response.render(
+          'users',
+          {
+              users: users
+          }
+      );
     })
+}
+
+router.promptSignup = (request, response) => {
+    // Renders the page to prompt users to sign up for a new account.
+
+    response.render('signup', {title: 'Dairy Diaries'});
 }
 
 module.exports = router;

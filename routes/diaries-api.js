@@ -8,7 +8,14 @@ let Diary = require('../models/diaries-db');
 router.retrieveDiaries = (request, response) => {
     // Retrieves all diaries from the database regardless of publicity.
 
-    Diary.find((err, diaries) => {
+    /*
+        The first argument is null to indicate to the query that the search is intended to
+        find every diary in the database.
+
+        The second argument tells the function to not return the id/author data into the
+        JSON output. This is done for security.
+     */
+    Diary.find(null, '-_id -author', (err, diaries) => {
 
         if (err) {
             response.send(`Error found while trying to access all the diaries.\n${err}`);
@@ -25,7 +32,7 @@ router.retrieveDiaries = (request, response) => {
 router.retrieveDiary = (request, response) => {
     // Retrieves a single diary from the database via id given.
 
-    Diary.findById(request.params.id, (err, diary) => {
+    Diary.findById(request.params.diaryId, '-_id -author', (err, diary) => {
 
         if (err) {
             response.send(`Error found while trying to find the following diary.\n${err}`);
@@ -40,15 +47,23 @@ router.retrieveDiary = (request, response) => {
 router.retrievePublicDiaries = (request, response) => {
     // Retrieves all public diaries from the database.
 
-    Diary.find({'sharing': true}, (err, diaries) => {
+    Diary.find({'sharing': true}, '-author', (err, diaries) => {
 
         if (err) {
             response.send(`Error found while trying to find public diaries.\n${err}`);
         }
 
+        /*
         response.send(
             JSON.stringify(diaries, null, 4)
         );
+        */
+        response.render(
+            'diaries',
+            {
+                diaries: diaries
+            }
+        )
     })
 }
 
@@ -81,6 +96,8 @@ router.addDiary = (request, response) => {
                 JSON.stringify(newDiary, null, 4)
             );
             */
+
+            // Redirecting user back to their main home page.
             response.redirect('/user/' + request.params.userId);
         })
     } else {
@@ -94,7 +111,7 @@ router.addComment = (request, response) => {
     // Ignore the POST request if the comment is empty.
     if (String(request.body.comment) !== '') {
 
-        Diary.findById(request.params.id, (err, diary) => {
+        Diary.findById(request.params.diaryId, (err, diary) => {
 
             if (err) {
                 response.send(`Error found while trying to find the following diary.\n${err}`);
@@ -119,7 +136,7 @@ router.addComment = (request, response) => {
 router.likeDiary = (request, response) => {
     // Updates a diary's like count, simple PUT operation.
 
-    Diary.findById(request.params.id, (err, diary) => {
+    Diary.findById(request.params.diaryId, (err, diary) => {
 
         if (err) {
             response.send(`Error found while trying to find the following diary.\n${err}`);
@@ -133,9 +150,12 @@ router.likeDiary = (request, response) => {
                 response.send(`Error found while updating the like count.\n${err}`);
             }
 
+            /*
             response.send(
                 JSON.stringify(diary, null, 4)
             );
+            */
+            response.redirect('/diaries');
         })
     })
 }
@@ -143,26 +163,27 @@ router.likeDiary = (request, response) => {
 router.deleteDiary = (request, response) => {
     // Deletes a diary from the database.
 
-    Diary.findByIdAndRemove(request.params.id, (err) => {
+    Diary.findByIdAndRemove(request.params.diaryId, (err) => {
 
         if (err) {
             response.send(`Error found while trying to delete the diary.\n${err}`);
         }
 
-        response.send('Success, diary deleted.');
+        // response.send('Success, diary deleted.');
+        response.redirect('/user/' + request.params.userId);
     })
 }
 
 router.changePublicity = (request, response) => {
     // Changes the publicity of a diary with the given id.
 
-    Diary.findById(request.params.id, (err, diary) => {
+    Diary.findById(request.params.diaryId, (err, diary) => {
 
         if (err) {
             response.send(`Error found while trying to find the following diary.\n${err}`);
         }
 
-        // Inverting the boolean value of sharing.
+        // Inverting the boolean value of sharing. So true ==> false, false ==> true.
         diary.sharing = !diary.sharing;
 
         diary.save((err) => {
@@ -200,7 +221,7 @@ router.retrieveUserDiaries = (request, response) => {
 router.retrievePublicDiariesWithTitle = (request, response) => {
     // Retrieves all public diaries with a matching title.
 
-    Diary.find({'sharing': true}, (err, diaries) => {
+    Diary.find({'sharing': true}, '-author', (err, diaries) => {
 
         if (err) {
             response.send(`Error found while trying to find public diaries.\n${err}`);

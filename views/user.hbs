@@ -17,7 +17,7 @@
 
                 <br><br>
                 {{likes}} <i class="thumbs up blue icon"></i>
-                <a href="/diaries/{{id}}"><i class="ui right floated small remove circle red icon"></i></a>
+                <a href="/deletediary/{{../userId}}/{{id}}"><i class="ui right floated small remove circle red icon"></i></a>
             </p>
         </div>
     {{/each}}
@@ -27,7 +27,7 @@
 
 <div class="ui stackable segment">
     <h4 class="ui horizontal divider header">
-        New diary
+        New Diary
     </h4>
 
     <form class="ui basic segment" action="/diaries/{{userId}}" method="POST">

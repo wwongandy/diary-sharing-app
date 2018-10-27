@@ -1,0 +1,17 @@
+<div class="ui list stackable segment">
+    <h4 class="ui horizontal divider header">
+        All Users
+    </h4>
+
+    {{#each users}}
+        <div class="item">
+            <img class="ui avatar image" src="https://s3.amazonaws.com/37assets/svn/765-default-avatar.png">
+            <div class="content">
+                <a class="header">{{name}}</a>
+                <div class="description">Created in {{date}}.</div>
+            </div>
+        </div>
+
+        <br><br>
+    {{/each}}
+</div>
