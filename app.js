@@ -3,7 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
 const routes = require('./routes');
+
+// Private file containing the mLab URI to connect to the persistent database.
+const mlabURI = require('./mlab-credentials');
 
 var app = express();
 
@@ -39,12 +43,9 @@ app.use(function(err, req, res, next) {
 /*
     Connecting to the local MongoDB server.
     Uses Mongoose to establish connections with MongoDB.
-
-    TODO:
-    This will be setup to use an actual mLab MongoDB later.
  */
 let mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/diariesdb', { useNewUrlParser: true });
+mongoose.connect(mlabURI, { useNewUrlParser: true });
 
 let db = mongoose.connection;
 
