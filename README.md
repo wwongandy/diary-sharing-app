@@ -11,19 +11,6 @@ Note that this project requires Node.js to be installed onto your device beforeh
 2) In the terminal, run *npm install* inside the project folder.
 
 3) Create a file named *mlab-credentials.js* in the project folder (alongside app.js) containing the following contents;
-```## diary_sharing
-Public/private diary sharing website for Web App Development 2's first assignment.
-
-This website was built using the WebStorm IDE via JavaScript, Node.js and Handlebars.js, with the user interface compiled together using the Semantic UI framework. The RESTful API is built on a MongoDB database.
-
-## Running the Project Locally:
-Note that this project requires Node.js to be installed onto your device beforehand.
-
-1) Clone the project and unzip the downloaded file.
-
-2) In the terminal, run *npm install* inside the project folder.
-
-3) Create a file named *mlab-credentials.js* in the project folder (alongside app.js) containing the following contents;
 ```
 // Must create a mlab account and database to get the following link;
 module.exports = 'your-mlab-uri-link-to-database';
