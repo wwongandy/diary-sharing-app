@@ -67,10 +67,6 @@ To run the tests for the project, run *npm test* in the terminal on the project 
 {name: '', password: ''}
 ```
 
-#### DELETE:
-
-- /users/:userId (Deletes a user with the given ID)
-
 ## Other:
 - [Hosted on Glitch](https://andyandya-diary-sharing.glitch.me/)
 
