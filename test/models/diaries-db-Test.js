@@ -3,11 +3,6 @@ const assert = require('chai').assert;
 
 describe('Diaries Model Schema Tests', () => {
 
-    const diaryTitle = 'Diary Testing';
-    const diaryText = 'Hello, this is a diary for testing.';
-    const likes = 5;
-    const newComment = 'This is a comment for testing.';
-
     describe('Default created diary', () => {
 
         // Creating a new diary with default variables.
@@ -52,7 +47,7 @@ describe('Diaries Model Schema Tests', () => {
 
         it('Diary author should be Anonymous by default.', () => {
             assert.strictEqual(newDiary.author, 'Anonymous', 'Diary author is Anonymous by default.')
-        })
+        });
 
         it('Diary publicity should be a boolean', () => {
             assert.isBoolean(newDiary.sharing, 'Diary publicity is a boolean variable.');
@@ -64,6 +59,11 @@ describe('Diaries Model Schema Tests', () => {
     });
 
     describe('Created diary with updated title and text', () => {
+
+        const diaryTitle = 'Diary Testing';
+        const diaryText = 'Hello, this is a diary for testing.';
+        const likes = 5;
+        const newComment = 'This is a comment for testing.';
 
         // Creating a diary with updated variables.
         let newDiary = new Diary();
@@ -117,4 +117,4 @@ describe('Diaries Model Schema Tests', () => {
             assert.isFalse(newDiary.sharing, 'Diary publicity updated successfully.');
         });
     });
-})
+});

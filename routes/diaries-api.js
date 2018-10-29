@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 
 let Diary = require('../models/diaries-db');
+let User = require('../models/users-db');
 
 // RESTful API functions to interact with the database;
 
@@ -204,7 +205,7 @@ router.changePublicity = (request, response) => {
 }
 
 router.retrieveUserDiaries = (request, response) => {
-    // Retrieves all diaries of a particular user.
+    // Retrieves all diaries and the user data of a user with the given ID.
 
     Diary.find({'author': request.params.userId}, (err, diaries) => {
 
@@ -212,13 +213,22 @@ router.retrieveUserDiaries = (request, response) => {
             response.send(`Error found while trying to access the diaries of the given user.\n${err}`);
         }
 
-        response.render(
-            'user',
-            {
-                userId: request.params.userId,
-                diaries: diaries
+        // Returning the user's database data.
+        User.findById(request.params.userId, '-password', (err, user) => {
+
+            if (err) {
+                response.send(`Error found while trying to get the user data of the given user.\n${err}`);
             }
-        );
+
+            response.render(
+                'user',
+                {
+                    userId: request.params.userId,
+                    user: user,
+                    diaries: diaries
+                }
+            );
+        })
     })
 }
 

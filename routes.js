@@ -10,7 +10,7 @@ const diariesAPI = require('./routes/diaries-api');
 router.get('/', indexRouter);
 router.get('/diaries', diariesAPI.retrievePublicDiaries);
 router.get('/users', usersRouter.retrieveUsers);
-router.get('/signup', usersRouter.promptSignup)
+router.get('/signup', usersRouter.promptSignup);
 router.get('/user/:userId', diariesAPI.retrieveUserDiaries);
 
 /*
@@ -19,7 +19,7 @@ router.get('/user/:userId', diariesAPI.retrieveUserDiaries);
     Note that the some routes are commented out and replaced with a different initial URL name (e.g. /deletediary/:userId <== /diaries),
     they were replaced to allow the UI to interact with the routes, as DELETE/PUT methods are not supported.
  */
-router.post('/search', diariesAPI.retrievePublicDiariesWithTitle) // Fuzzy search implementation.
+router.post('/search', diariesAPI.retrievePublicDiariesWithTitle); // Fuzzy search implementation.
 router.get('/diaries/:diaryId', diariesAPI.retrieveDiary);
 router.get('/deletediary/:userId/:diaryId', diariesAPI.deleteDiary);  // <== router.delete('/diaries/:id', diariesAPI.deleteDiary);
 router.post('/diaries/:userId', diariesAPI.addDiary); // User Id is used to associate the added diary with a user.
@@ -30,6 +30,6 @@ router.get('/sharediary/:userId/:diaryId', diariesAPI.changePublicity); // <== r
 // User API related routes.
 router.post('/users', usersRouter.addUser);
 router.post('/users/login', usersRouter.authenticateUser);
-router.delete('/users/:userId', usersRouter.deleteUser);
+router.get('/deleteuser/:userId', usersRouter.deleteUser); // <== router.delete('/users/:userId', usersRouter.deleteUser);
 
 module.exports = router;

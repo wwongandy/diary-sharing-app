@@ -3,7 +3,7 @@ let router = express.Router();
 
 let bcrypt = require('bcryptjs');
 let User = require('../models/users-db');
-let Diary = require('./diaries-api');
+let Diary = require('../models/diaries-db');
 
 /*
     RESTful API functions to allow creation and authentication of users;
@@ -28,7 +28,7 @@ router.addUser = (request, response) => {
         response.send(`Error found while checking if the given name already exists.\n${err}`);
       }
 
-      if (users.length == 0) {
+      if (users.length === 0) {
 
           /*
             Hashing the password before saving it using bcrypt.js
@@ -78,7 +78,7 @@ router.authenticateUser = (request, response) => {
 
   const { name, password } = request.body;
 
-  if (request.body.name != undefined && request.body.password != undefined) {
+  if (String(request.body.name) != '' && String(request.body.password) != '') {
 
     User.find({'name': name}, (err, users) => {
 
@@ -112,15 +112,22 @@ router.authenticateUser = (request, response) => {
 }
 
 router.deleteUser = (request, response) => {
-  // Deleting a user (for testing).
+    // Deleting a user and their associated diaries.
 
-    User.findByIdAndRemove(request.params.userId, (err) => {
+    Diary.deleteMany({'author': request.params.userId}, (err) => {
 
-      if (err) {
-        response.send(`Error found while trying to delete the user.\n${err}`);
-      }
+        if (err) {
+            response.send(`Error found while trying to remove the diaries of the given user.\n${err}`);
+        }
 
-      response.send('Success, user deleted.');
+        User.findByIdAndRemove(request.params.userId, (err) => {
+
+            if (err) {
+                response.send(`Error found while trying to delete the user.\n${err}`);
+            }
+
+            response.redirect('/users');
+        })
     })
 }
 
