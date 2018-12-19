@@ -21,52 +21,6 @@ module.exports = 'your-mlab-uri-link-to-database';
 ### Testing:
 To run the tests for the project, run *npm test* in the terminal on the project folder.
 
-## RESTful API Routes:
-#### GET:
-
-- /diaries (Gets all public diaries)
-
-- /users (Gets all users)
-
-- /user/:userId (Gets all diaries belonging to a user with given ID)
-
-- /diaries/:diaryId (Gets a specific diary with given ID)
-
-- /deletediary/:userId/:diaryId (Deletes a diary relating to a user with the given corresponding IDs)
-
-- /likediary/:diaryId (Likes a diary with the given ID)
-
-- /sharediary/:userId/:diaryId (Changes a diary's publicity with the given diary and user IDs)
-
-- /deleteuser/:userId (Deletes a user and their diaries with the given user ID)
-
-#### POST:
-
-- /search (Looks for any public diaries with the given string in the title)
-```
-{title: ''}
-```
-
-- /diaries/:userId (Adds a new diary with the author set as the given user ID)
-```
-{title: '', text: ''}
-```
-
-- /commentdiary/:diaryId (Comment on a diary with the given ID)
-```
-{comment: ''}
-```
-
-- /users (Adds a new user)
-```
-{name: '', password: ''}
-```
-
-- /users/login (Authenticates a user and redirects them to their landing page)
-```
-{name: '', password: ''}
-```
-
 ## Other:
 - [Hosted on Glitch](https://andyandya-diary-sharing.glitch.me/)
 
