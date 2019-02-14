@@ -1,4 +1,4 @@
-## diary_sharing
+## diary-sharing-app
 Public/private diary sharing website for Web App Development 2's first assignment.
 
 This website was built using the WebStorm IDE via JavaScript, Node.js and Handlebars.js, with the user interface compiled together using the Semantic UI framework. The RESTful API is built on a MongoDB database.
